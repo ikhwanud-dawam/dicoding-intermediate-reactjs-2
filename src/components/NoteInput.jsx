@@ -2,67 +2,47 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FaCheck } from "react-icons/fa6";
 
-class NoteInput extends React.Component {
-  constructor(props) {
-    super(props);
+function NoteInput({ addNote }) {
+  const [title, setTitle] = React.useState("");
+  const [body, setBody] = React.useState("");
 
-    this.state = {
-      title: "",
-      body: "",
-    };
-
-    this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-    this.onBodyInputEventHandler = this.onBodyInputEventHandler.bind(this);
-    this.onSubmitChangeEventHandler = this.onSubmitChangeEventHandler.bind(this);
+  function onTitleChangeEventHandler(event) {
+    setTitle(event.target.value);
   }
 
-  onTitleChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        title: event.target.value,
-      };
-    });
+  function onBodyInputEventHandler(event) {
+    setBody(event.target.innerHTML);
   }
 
-  onBodyInputEventHandler(event) {
-    this.setState(() => {
-      return {
-        body: event.target.innerHTML,
-      };
-    });
-  }
-
-  onSubmitChangeEventHandler(event) {
+  function onSubmitChangeEventHandler(event) {
     event.preventDefault();
-    this.props.addNote(this.state);
+    addNote({ title, body });
   }
 
-  render() {
-    return (
-      <form className="note-input" onSubmit={this.onSubmitChangeEventHandler}>
-        <div className="add-new-page__input">
-          <input
-            className="add-new-page__input__title"
-            type="text"
-            placeholder="Masukkan judul note"
-            value={this.state.title}
-            onChange={this.onTitleChangeEventHandler}
-          />
-          <div
-            className="add-new-page__input__body"
-            data-placeholder="Masukkan isi note yaa ..."
-            contentEditable
-            onInput={this.onBodyInputEventHandler}
-          />
-        </div>
-        <div className="add-new-page__action">
-          <button className="action" type="submit" title="Simpan">
-            <FaCheck />
-          </button>
-        </div>
-      </form>
-    );
-  }
+  return (
+    <form className="note-input" onSubmit={onSubmitChangeEventHandler}>
+      <div className="add-new-page__input">
+        <input
+          className="add-new-page__input__title"
+          type="text"
+          placeholder="Masukkan judul note"
+          value={title}
+          onChange={onTitleChangeEventHandler}
+        />
+        <div
+          className="add-new-page__input__body"
+          data-placeholder="Masukkan isi note yaa ..."
+          contentEditable
+          onInput={onBodyInputEventHandler}
+        />
+      </div>
+      <div className="add-new-page__action">
+        <button className="action" type="submit" title="Simpan">
+          <FaCheck />
+        </button>
+      </div>
+    </form>
+  );
 }
 
 NoteInput.propTypes = {

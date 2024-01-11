@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import NotesWrapper from "./pages/Notes";
-import ArchivesWrapper from "./pages/Archives";
-import DetailPageWrapper from "./pages/DetailPage";
+import Notes from "./pages/Notes";
+import Archives from "./pages/Archives";
+import DetailPage from "./pages/DetailPage";
 import AddNotes from "./pages/AddNotes";
 import NotFound from "./components/NotFound";
 
@@ -18,10 +18,10 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<NotesWrapper />}></Route>
-          <Route path="/archives" element={<ArchivesWrapper />}></Route>
+          <Route path="/" element={<Notes />}></Route>
+          <Route path="/archives" element={<Archives />}></Route>
           <Route path="/notes/new" element={<AddNotes />}></Route>
-          <Route path="/notes/:id" element={<DetailPageWrapper />}></Route>
+          <Route path="/notes/:id" element={<DetailPage />}></Route>
           <Route path="*" element={<NotFound/>} />
         </Routes>
       </main>

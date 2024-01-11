@@ -1,66 +1,35 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import PropTypes from "prop-types";
 import { getArchivedNotes } from "../utils/local-data";
 import NotesList from "../components/NotesList";
 import SearchBar from "../components/SearchBar";
 
-function ArchivesWrapper() {
+function Archives() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword");
-  function changeSearchParams(keyword) {
+  const [archivedNotes, setArchivedNotes] = React.useState([]);
+  const [keyword, setKeyword] = React.useState(() => {
+    return searchParams.get("keyword") || "";
+  });
+  function onKeywordChangeHandler(keyword) {
+    setKeyword(keyword);
     setSearchParams({ keyword });
   }
 
+  React.useEffect(() => {
+    setArchivedNotes(getArchivedNotes());
+  }, []);
+
+  const notes = archivedNotes.filter((note) => {
+    return note.title.toLowerCase().includes(keyword.toLowerCase());
+  });
+
   return (
-    <Archives defaultKeyword={keyword} keywordChange={changeSearchParams} />
+    <section className="archives-page">
+      <h2>Catatan Arsip</h2>
+      <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+      <NotesList notes={notes} />
+    </section>
   );
 }
-class Archives extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      archivedNotes: getArchivedNotes(),
-      keyword: props.defaultKeyword || "",
-    };
-
-    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
-  }
-
-  onKeywordChangeHandler(keyword) {
-    this.setState(() => {
-      return {
-        keyword,
-      };
-    });
-
-    this.props.keywordChange(keyword);
-  }
-
-  render() {
-    const notes = this.state.archivedNotes.filter((note) => {
-      return note.title
-        .toLowerCase()
-        .includes(this.state.keyword.toLowerCase());
-    });
-
-    return (
-      <section className="archives-page">
-        <h2>Catatan Arsip</h2>
-        <SearchBar
-          keyword={this.state.keyword}
-          keywordChange={this.onKeywordChangeHandler}
-        />
-        <NotesList notes={notes} />
-      </section>
-    );
-  }
-}
-
-Archives.propTypes = {
-  defaultKeyword: PropTypes.string,
-  keywordChange: PropTypes.func.isRequired,
-};
-
-export default ArchivesWrapper;
+export default Archives;
