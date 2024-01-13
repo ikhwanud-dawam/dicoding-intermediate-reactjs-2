@@ -1,24 +1,25 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import { getActiveNotes } from "../utils/local-data";
 import NotesList from "../components/NotesList";
 import SearchBar from "../components/SearchBar";
 import LocaleContext from "../contexts/LocaleContext";
+import useNotes from "../hooks/useNotes";
 
 function Notes() {
   const { locale } = React.useContext(LocaleContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeNotes, setActiveNotes] = React.useState([]);
+  const [activeNotes, isLoading] = useNotes([]);
   const [keyword, setKeyword] = React.useState(() => {
     return searchParams.get("keyword") || "";
   });
 
-  React.useEffect(() => {
-    setActiveNotes(getActiveNotes());
-  }, []);
+  const loadingMessages = {
+    id: "Memuat catatan...",
+    en: "Fetching notes...",
+  };
 
-  function onKeywordChangeHandler(keyword) {
+  function onKeywordChange(keyword) {
     setKeyword(keyword);
     setSearchParams({ keyword });
   }
@@ -29,9 +30,9 @@ function Notes() {
 
   return (
     <section className="homepage">
-      <h2>{locale === 'id' ? 'Catatan Aktif' : 'Active Note'}</h2>
-      <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
-      <NotesList notes={notes} />
+      <h2>{locale === "id" ? "Catatan Aktif" : "Active Note"}</h2>
+      <SearchBar keyword={keyword} keywordChange={onKeywordChange} />
+      {isLoading ? loadingMessages[locale] : <NotesList notes={notes} />}
       <div className="homepage__action">
         <Link to="/notes/new">
           <button className="action" type="button" title="Tambah">
