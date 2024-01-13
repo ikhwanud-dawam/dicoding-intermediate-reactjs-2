@@ -32,7 +32,7 @@ function LoginInput({ login }) {
           value={password}
           onChange={onPasswordChange}
         ></input>
-        <button type="submit">login</button>
+        <button type="submit">Login</button>
       </div>
     </form>
   );

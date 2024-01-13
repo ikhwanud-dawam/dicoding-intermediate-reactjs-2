@@ -1,18 +1,14 @@
 import React from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { ThemeConsumer } from "../contexts/ThemeContext";
+import LocaleContext from "../contexts/LocaleContext";
+import { MdGTranslate } from "react-icons/md";
 
 function LocaleToggle() {
+  const { toggleLocale} = React.useContext(LocaleContext);
+
   return (
-    <ThemeConsumer>
-      {({ theme, toggleTheme }) => {
-        return (
-          <button onClick={toggleTheme} className="toggle-locale">
-            {theme === "light" ? <FaMoon /> : <FaSun />}
-          </button>
-        );
-      }}
-    </ThemeConsumer>
+    <button onClick={toggleLocale} className="toggle-locale">
+      <MdGTranslate/>
+    </button>
   );
 }
 

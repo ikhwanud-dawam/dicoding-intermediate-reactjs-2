@@ -4,8 +4,10 @@ import { FaPlus } from "react-icons/fa6";
 import { getActiveNotes } from "../utils/local-data";
 import NotesList from "../components/NotesList";
 import SearchBar from "../components/SearchBar";
+import LocaleContext from "../contexts/LocaleContext";
 
 function Notes() {
+  const { locale } = React.useContext(LocaleContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeNotes, setActiveNotes] = React.useState([]);
   const [keyword, setKeyword] = React.useState(() => {
@@ -27,7 +29,7 @@ function Notes() {
 
   return (
     <section className="homepage">
-      <h2>Catatan Aktif</h2>
+      <h2>{locale === 'id' ? 'Catatan Aktif' : 'Active Note'}</h2>
       <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
       <NotesList notes={notes} />
       <div className="homepage__action">
