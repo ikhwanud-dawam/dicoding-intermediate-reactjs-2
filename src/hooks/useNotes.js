@@ -1,13 +1,12 @@
 import React from "react";
-import { getActiveNotes } from "../utils/network-data";
 
-function useNotes() {
+function useNotes(getNotes) {
   const [isLoading, setLoading] = React.useState(true);
-  const [activeNotes, setActiveNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState([]);
 
   React.useEffect(() => {
-    getActiveNotes().then(({ error, data }) => {
-      !error ? setActiveNotes(data) : alert("Sistem sedang error");
+    getNotes().then(({ error, data }) => {
+      !error ? setNotes(data) : alert("Sistem sedang error");
       setLoading(false);
     });
 
@@ -16,7 +15,7 @@ function useNotes() {
     };
   }, []);
 
-  return [activeNotes, isLoading];
+  return [notes, isLoading];
 }
 
 export default useNotes;

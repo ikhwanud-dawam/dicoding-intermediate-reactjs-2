@@ -5,11 +5,12 @@ import NotesList from "../components/NotesList";
 import SearchBar from "../components/SearchBar";
 import LocaleContext from "../contexts/LocaleContext";
 import useNotes from "../hooks/useNotes";
+import { getActiveNotes } from "../utils/network-data";
 
 function Notes() {
   const { locale } = React.useContext(LocaleContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeNotes, isLoading] = useNotes([]);
+  const [activeNotes, isLoading] = useNotes(() => getActiveNotes());
   const [keyword, setKeyword] = React.useState(() => {
     return searchParams.get("keyword") || "";
   });
