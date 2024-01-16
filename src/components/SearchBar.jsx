@@ -9,7 +9,11 @@ function SearchBar({ keyword, keywordChange }) {
     <section className="search-bar">
       <input
         type="text"
-        placeholder={locale === "id" ? "Cari berdasarkan judul note" : "Search by title ..."}
+        placeholder={
+          locale === "id"
+            ? "Cari berdasarkan judul note"
+            : "Search by title ..."
+        }
         value={keyword}
         onChange={(event) => keywordChange(event.target.value)}
       />

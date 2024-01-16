@@ -1,7 +1,6 @@
 import React from "react";
 import LocaleContext from "../contexts/LocaleContext";
 
-
 function NotFound() {
   const { locale } = React.useContext(LocaleContext);
 

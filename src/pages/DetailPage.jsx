@@ -1,6 +1,11 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getNote, archiveNote, unarchiveNote, deleteNote } from "../utils/network-data";
+import {
+  getNote,
+  archiveNote,
+  unarchiveNote,
+  deleteNote,
+} from "../utils/network-data";
 import NoteDetails from "../components/NoteDetails";
 import NotFound from "../components/NotFound";
 
