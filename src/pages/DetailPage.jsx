@@ -1,9 +1,8 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getNote } from "../utils/network-data";
+import { getNote, archiveNote, unarchiveNote, deleteNote } from "../utils/network-data";
 import NoteDetails from "../components/NoteDetails";
 import NotFound from "../components/NotFound";
-import { archiveNote, unarchiveNote, deleteNote } from "../utils/local-data";
 
 function DetailPage() {
   const { id } = useParams();
@@ -24,18 +23,18 @@ function DetailPage() {
     };
   }, [id]);
 
-  function onDeleteNoteHandler(id) {
-    deleteNote(id);
+  async function onDeleteNoteHandler(id) {
+    await deleteNote(id);
     navigate("/");
   }
 
-  function onArchiveNoteHandler(id) {
-    archiveNote(id);
+  async function onArchiveNoteHandler(id) {
+    await archiveNote(id);
     navigate("/");
   }
 
-  function onUnarchiveNoteHandler(id) {
-    unarchiveNote(id);
+  async function onUnarchiveNoteHandler(id) {
+    await unarchiveNote(id);
     navigate("/");
   }
 
